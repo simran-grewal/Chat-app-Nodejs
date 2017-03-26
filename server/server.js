@@ -14,6 +14,17 @@ app.use(express.static(publicPath));
 
   console.log('New user connected');
 
+  socket.emit('newMessage', {
+    from: 'Admin',
+    text: 'Welcome to ChatRoom',
+    createdAt: new Date().getTime()
+  });
+
+  socket.broadcast.emit('newMessage', {
+    from: 'Admit',
+    text: 'newUser joined',
+    createAt: new Date().getTime()
+  })
 
   socket.on('createMessage', (message) =>{
     console.log('createMessage', message);
@@ -22,6 +33,14 @@ app.use(express.static(publicPath));
       text : message.text,
       createdAt: new Date().getTime()
     })
+
+      // socket.broadcast.emit('newMessage', {
+      //   from: message.from,
+      //   text: message.text,
+      //   createdAt: new Date().getTime()
+      // })
+
+
   });
 
 
