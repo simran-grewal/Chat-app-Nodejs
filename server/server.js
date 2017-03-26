@@ -15,16 +15,17 @@ app.use(express.static(publicPath));
   console.log('New user connected');
 
 
-    socket.emit('newMessage', {
-      from: 'simrangrewal587@gmail.com',
-      text: 'this is my first Socket.io app',
-      createdAt: new Date()
-    });
-
-
   socket.on('createMessage', (message) =>{
-    console.log(message);
-  })
+    console.log('createMessage', message);
+    io.emit('newMessage', {
+      from : message.from,
+      text : message.text,
+      createdAt: new Date().getTime()
+    })
+  });
+
+
+
   socket.on('disconnect', () => {
     console.log('User was disconnected');
   })
